@@ -1,4 +1,4 @@
-from model import ModelInfo, StateVariable, Vertex, Edge
+from pythonsigma.model import ModelInfo, StateVariable, Vertex, Edge
 
 
 def parse(input_file):

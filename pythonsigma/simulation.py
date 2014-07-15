@@ -1,11 +1,12 @@
 from Queue import PriorityQueue
 from itertools import count
-from parser import parse
-from model import Event
 from copy import copy
 from time import time
-from model import Output
 import random
+
+from parser import parse
+from pythonsigma.model import Event
+from pythonsigma.model import Output
 
 
 class Simulation:
