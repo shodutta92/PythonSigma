@@ -10,7 +10,7 @@ from pythonsigma.model import Output
 
 
 class Simulation:
-    def __init__(self, model_file, runtime, initial_values):
+    def __init__(self, model_file, runtime, initial_values, input_data):
         globals()['clock'] = 0
         self.model = parse(model_file)
         self.model.initialValues = initial_values
@@ -18,6 +18,7 @@ class Simulation:
         self.counter = count()
         self.runtime = runtime
         self.output = Output()
+        self.input_data = input_data
 
     def run_simulation(self, random_seed):
         self.initialize()
@@ -27,6 +28,11 @@ class Simulation:
         return self.output
 
     def initialize(self):
+        global datastore
+        datastore = []
+        globals()['data'] = {}
+        for datafilename in self.input_data:
+            globals()['data'][datafilename] = iter(self.input_data[datafilename])
         self.output.events = []
         self.output.statistics = dict()
         for var in self.model.traceVars:
@@ -91,14 +97,3 @@ def put(listindex):
 def get(listindex):
     globals()['ENT'] = datastore[listindex].pop(0)
     return 1
-
-initialValues = [0.1, 12, 9, 10, 11, 12, 13, 3, 3, 3, 3, 3, 3]
-sim = Simulation('Model_Enhanced Final.mod', 14400, initialValues)
-datafile = open('data.dat', 'rb')
-data = datafile.read().split()
-globals()['data'] = iter(data)
-datastore = []
-datafile.close()
-time0 = time()
-output = sim.run_simulation(12345)
-print time() - time0

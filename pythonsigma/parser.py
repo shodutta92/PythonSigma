@@ -1,4 +1,5 @@
 from pythonsigma.model import ModelInfo, StateVariable, Vertex, Edge
+import re
 
 
 def parse(input_file):
@@ -84,12 +85,12 @@ def parse(input_file):
     return model
 
 
-def format_change(string):
-    string = string.replace('RND', 'random.random()')
-    string = string.replace('DISK{DATA.DAT;0}', 'float(next(data))')
-    string = string.replace('PUT{FIF;', 'put(')
-    string = string.replace('GET{FST;', 'get(')
-    string = string.replace('}', ')')
-    string = string.replace('CLK', 'clock')
-    string = string.replace('&', ' and ')
-    return string
+def format_change(input_string):
+    input_string = input_string.replace('RND', 'random.random()')
+    input_string = re.sub(r'DISK\{(.*);0}', r"float(next(data['\1']))", input_string)
+    input_string = input_string.replace('PUT{FIF;', 'put(')
+    input_string = input_string.replace('GET{FST;', 'get(')
+    input_string = input_string.replace('}', ')')
+    input_string = input_string.replace('CLK', 'clock')
+    input_string = input_string.replace('&', ' and ')
+    return input_string
