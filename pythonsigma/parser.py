@@ -93,4 +93,5 @@ def format_change(input_string):
     input_string = input_string.replace('}', ')')
     input_string = input_string.replace('CLK', 'clock')
     input_string = input_string.replace('&', ' and ')
+    input_string = input_string.replace('|', ' or ')
     return input_string
